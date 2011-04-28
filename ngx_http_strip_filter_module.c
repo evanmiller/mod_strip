@@ -386,22 +386,22 @@ ngx_http_strip_process_buffer(ngx_buf_t *buffer, ngx_http_strip_ctx_t *ctx)
                 ctx->state = (*reader == 'e' || *reader == 'E') ? strip_state_textarea_angle_slash_te : strip_state_textarea;
                 break;
             case strip_state_textarea_angle_slash_te:
-                ctx->state = (*reader == 'x' || *reader == 'X') ? strip_state_textarea_angle_slash_te : strip_state_textarea;
+                ctx->state = (*reader == 'x' || *reader == 'X') ? strip_state_textarea_angle_slash_tex : strip_state_textarea;
                 break;
             case strip_state_textarea_angle_slash_tex:
-                ctx->state = (*reader == 't' || *reader == 'T') ? strip_state_textarea_angle_slash_te : strip_state_textarea;
+                ctx->state = (*reader == 't' || *reader == 'T') ? strip_state_textarea_angle_slash_text : strip_state_textarea;
                 break;
             case strip_state_textarea_angle_slash_text:
-                ctx->state = (*reader == 'a' || *reader == 'A') ? strip_state_textarea_angle_slash_te : strip_state_textarea;
+                ctx->state = (*reader == 'a' || *reader == 'A') ? strip_state_textarea_angle_slash_texta : strip_state_textarea;
                 break;
             case strip_state_textarea_angle_slash_texta:
-                ctx->state = (*reader == 'r' || *reader == 'R') ? strip_state_textarea_angle_slash_te : strip_state_textarea;
+                ctx->state = (*reader == 'r' || *reader == 'R') ? strip_state_textarea_angle_slash_textar : strip_state_textarea;
                 break;
             case strip_state_textarea_angle_slash_textar:
-                ctx->state = (*reader == 'e' || *reader == 'E') ? strip_state_textarea_angle_slash_te : strip_state_textarea;
+                ctx->state = (*reader == 'e' || *reader == 'E') ? strip_state_textarea_angle_slash_textare : strip_state_textarea;
                 break;
             case strip_state_textarea_angle_slash_textare:
-                ctx->state = (*reader == 'a' || *reader == 'A') ? strip_state_textarea_angle_slash_te : strip_state_textarea;
+                ctx->state = (*reader == 'a' || *reader == 'A') ? strip_state_textarea_angle_slash_textarea : strip_state_textarea;
                 break;
             case strip_state_textarea_angle_slash_textarea:
                 ctx->state = (*reader == '>') ? strip_state_text : strip_state_textarea;
