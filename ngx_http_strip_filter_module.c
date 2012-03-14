@@ -168,7 +168,7 @@ static ngx_int_t
 ngx_http_strip_body_filter(ngx_http_request_t *r, ngx_chain_t *in)
 {
     ngx_http_strip_ctx_t *ctx;
-    ngx_chain_t          *chain_link;
+    ngx_chain_t          *chain_link, *prev_link = NULL;
 
     ctx = ngx_http_get_module_ctx(r, ngx_http_strip_filter_module);
     if (ctx == NULL) {
@@ -177,7 +177,19 @@ ngx_http_strip_body_filter(ngx_http_request_t *r, ngx_chain_t *in)
 
     for (chain_link = in; chain_link; chain_link = chain_link->next) {
         ngx_http_strip_process_buffer(chain_link->buf, ctx);
+        if (chain_link->buf->pos == chain_link->buf->last) {
+            if (prev_link) {
+                prev_link->next = chain_link->next;
+            } else {
+                in = chain_link->next;
+            }
+        } else {
+            prev_link = chain_link;
+        }
     }
+
+    if (in == NULL)
+        return NGX_OK;
 
     return ngx_http_next_body_filter(r, in);
 }
